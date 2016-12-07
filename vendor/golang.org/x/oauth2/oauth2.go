@@ -170,7 +170,8 @@ func (c *Config) Exchange(ctx context.Context, code string) (*Token, error) {
 		"grant_type":   {"authorization_code"},
 		"code":         {code},
 		"redirect_uri": condVal(c.RedirectURL),
-		"scope":        condVal(strings.Join(c.Scopes, " ")),
+		// Salesforce doesn't support sending scope when getting access token
+		// "scope":        condVal(strings.Join(c.Scopes, " ")),
 	})
 }
 
@@ -437,6 +438,8 @@ var brokenAuthHeaderProviders = []string{
 	"https://oauth.sandbox.trainingpeaks.com/",
 	"https://oauth.trainingpeaks.com/",
 	"https://www.strava.com/oauth/",
+	"https://login.salesforce.com/",
+	"https://test.salesforce.com/",
 }
 
 // providerAuthHeaderWorks reports whether the OAuth2 server identified by the tokenURL
